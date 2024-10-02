@@ -1,34 +1,36 @@
 import React from "react";
 import styled from "styled-components";
 import { Row } from "../row/Row";
+import { Data } from "../../state/store";
 
 type PropsType = {
      data: Data;
+     switch: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type Data = {
-     id: number;
-     type: string;
-     date: string;
-     airPortName: string;
-     schedule: Schedule[];
+type MapType = {
+     [key: string]: string;
 };
 
-export type Schedule = {
-     id: number;
-     carrier: string;
-     time: string;
-     flightName: string;
-     flightNumber: string;
-     fact: string;
-     reamark: string;
+const map: MapType = {
+     departure: "Вылет",
+     arrival: "Прилет",
 };
 
 export const Table: React.FC<PropsType> = React.memo((props) => {
+     const clickHandle = () => {
+          props.switch((prev) => (prev === 0 ? 1 : 0));
+     };
+
      return (
           <S.Container>
-               <S.Date>{props.data.type}</S.Date>
-               <S.Date>{props.data.date}</S.Date>
+               <div
+                    onClick={clickHandle}
+                    style={{ display: "flex", gap: "10px", userSelect: "none", marginBottom: "40px" }}
+               >
+                    <S.Date>{map[props.data.type]}</S.Date>
+                    <S.Date>{props.data.date}</S.Date>
+               </div>
                <S.Table>
                     <S.HeaderItem>Время</S.HeaderItem>
                     <S.HeaderItem>Направление</S.HeaderItem>
@@ -43,8 +45,6 @@ export const Table: React.FC<PropsType> = React.memo((props) => {
      );
 });
 
-const gap = 20;
-
 export const S = {
      Container: styled.div`
           padding: 30px;
@@ -55,6 +55,7 @@ export const S = {
      Date: styled.div`
           font-size: 40px;
           font-weight: 700;
+          cursor: pointer;
      `,
      Table: styled.div`
           display: grid;
@@ -63,6 +64,8 @@ export const S = {
      `,
      Header: styled.div``,
      HeaderItem: styled.div`
+          border-bottom: 1px solid rgb(153, 153, 153);
+          padding-bottom: 15px;
           font-weight: 400;
           font-size: 25px;
           color: rgb(153, 153, 153);

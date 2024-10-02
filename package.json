@@ -20,8 +20,13 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.1",
     "axios": "^1.7.7",
     "electron-updater": "^6.1.8",
+    "mobx": "^6.13.3",
+    "mobx-react-lite": "^4.0.7",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
